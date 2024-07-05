@@ -10,7 +10,7 @@ export const signup = async (req,res)=>{
     if(!emailRegex.test(email)){
         return res.status(400).json({error:'Invalid email'})
     }
-    
+    console.log(username,email,fullName,password);
     const existingUser = await User.findOne({username});
     if(existingUser){
         return res.status(400).json({error:'Username already taken'})
