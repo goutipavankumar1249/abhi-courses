@@ -4,6 +4,7 @@ import 'package:frontend/MyHomePage.dart';
 import 'package:frontend/login.dart';
 //import 'package:frontend/loginpage.dart';
 import 'package:frontend/signup.dart';
+import 'package:frontend/welcomePage.dart';
 //import 'package:frontend/signuppage.dart';
 
 void main() {
@@ -23,7 +24,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: MyHomePage()
+      home: WelcomePage()
     );
   }
 }
