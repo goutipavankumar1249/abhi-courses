@@ -1,5 +1,7 @@
-
 import 'package:flutter/material.dart';
+
+import 'CourseDescriptionPage.dart';
+import 'MyHomePage.dart';
 
 class CoursesPage extends StatelessWidget {
   final List<Map<String, String>> courses = [
@@ -57,111 +59,128 @@ class CoursesPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      // appBar: AppBar(
-      //   title: Text('Courses'),
-      // ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Courses That We Offer',
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-                color: Colors.black,
+    return WillPopScope(
+      onWillPop: () async {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => MyHomePage()),
+        );
+        return false;
+      },
+      child: Scaffold(
+        body: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Courses That We Offer',
+                style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                ),
               ),
-            ),
-            SizedBox(height: 16.0),
-            Expanded(
-              child: ListView.builder(
-                itemCount: courses.length,
-                itemBuilder: (context, index) {
-                  final course = courses[index];
-                  return Card(
-                    margin: EdgeInsets.symmetric(vertical: 8.0),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15.0),
-                    ),
-                    child: Padding(
-                      padding: EdgeInsets.all(16.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(15.0),
-                            child: Image.asset(
-                              course['image']!,
-                              width: double.infinity,
-                              height: 165,
-                              fit: BoxFit.cover,
-                            ),
+              SizedBox(height: 16.0),
+              Expanded(
+                child: ListView.builder(
+                  itemCount: courses.length,
+                  itemBuilder: (context, index) {
+                    final course = courses[index];
+                    return GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => CourseDescriptionPage(course: course),
                           ),
-                          SizedBox(height: 8.0),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        );
+                      },
+                      child: Card(
+                        margin: EdgeInsets.symmetric(vertical: 8.0),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15.0),
+                        ),
+                        child: Padding(
+                          padding: EdgeInsets.all(16.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Row(
-                                children: List.generate(5, (index) {
-                                  return Icon(
-                                    index < double.parse(course['rating']!)
-                                        ? Icons.star
-                                        : Icons.star_border,
-                                    color: Colors.yellow,
-                                  );
-                                }),
-                              ),
-                              Text(course['duration']!),
-                            ],
-                          ),
-                          SizedBox(height: 8.0),
-                          Text(
-                            course['title']!,
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black,
-                            ),
-                          ),
-                          SizedBox(height: 8.0),
-                          Text(
-                            course['description']!,
-                            maxLines: 3,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                          SizedBox(height: 8.0),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Row(
-                                children: [
-                                  CircleAvatar(
-                                    backgroundImage: AssetImage(course['tutorImage']!),
-                                  ),
-                                  SizedBox(width: 8.0),
-                                  Text(course['tutorName']!),
-                                ],
-                              ),
-                              Text(
-                                course['price']!,
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(15.0),
+                                child: Image.asset(
+                                  course['image']!,
+                                  width: double.infinity,
+                                  height: 165,
+                                  fit: BoxFit.cover,
                                 ),
                               ),
+                              SizedBox(height: 8.0),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Row(
+                                    children: List.generate(5, (index) {
+                                      return Icon(
+                                        index < double.parse(course['rating']!)
+                                            ? Icons.star
+                                            : Icons.star_border,
+                                        color: Colors.yellow,
+                                      );
+                                    }),
+                                  ),
+                                  Text(course['duration']!),
+                                ],
+                              ),
+                              SizedBox(height: 8.0),
+                              Text(
+                                course['title']!,
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black,
+                                ),
+                              ),
+                              SizedBox(height: 8.0),
+                              Text(
+                                course['description']!,
+                                maxLines: 3,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                              SizedBox(height: 8.0),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Row(
+                                    children: [
+                                      CircleAvatar(
+                                        backgroundImage: AssetImage(course['tutorImage']!),
+                                      ),
+                                      SizedBox(width: 8.0),
+                                      Text(course['tutorName']!),
+                                    ],
+                                  ),
+                                  Text(
+                                    course['price']!,
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ],
                           ),
-                        ],
+                        ),
                       ),
-                    ),
-                  );
-                },
+                    );
+                  },
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
   }
 }
+
